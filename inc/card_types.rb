@@ -1,0 +1,1 @@
+card_types = ['Flat','Folded','Tri-Fold','Sticker','Vinyl Sticker']
