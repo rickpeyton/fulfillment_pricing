@@ -64,6 +64,8 @@ papers = {
   }
 }
 
+back_side = [0,1,4]
+
 sizes = {
   'A' => { :size =>  0 },
   'B' => { :size =>  1 },
@@ -93,9 +95,23 @@ sizes = {
   'z' => { :size => 0.875 },
 }
 
-back_side = [0,1,4]
-
-puts 'Select a width.'
-sizes.each do |size|
-  puts "#{sizes['B'][:size]}"
+def list_sizes
+  sizes.each do |size|
+    puts "#{size[0]} for #{sizes[size[0]][:size]}"
+  end
 end
+
+def get_size side
+  if side.length > 1
+    width = sizes[side[0]][:size] + sizes[side[1]][:size]
+  else
+    width = sizes[side[0]][:size]
+  end
+
+  return width
+end
+
+list_sizes
+puts 'Select a width. Enter \'Eu\' for 4.25'
+width = get_size gets.chomp
+puts width
