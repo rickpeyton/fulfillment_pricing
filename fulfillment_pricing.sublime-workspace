@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"conv",
+				"convert_duplex"
+			],
+			[
+				"sel",
+				"selection"
+			],
+			[
+				"conver",
+				"convert_paper"
+			],
+			[
+				"se",
+				"selection"
+			],
+			[
+				"ca",
+				"card_types"
+			],
+			[
 				"dragon",
 				"dragon_options"
 			],
@@ -494,26 +514,6 @@
 			[
 				"do",
 				"dob	Insert do |variable| … end"
-			],
-			[
-				"words",
-				"wordslen"
-			],
-			[
-				"every",
-				"every400"
-			],
-			[
-				"bye",
-				"bye_count"
-			],
-			[
-				"grann",
-				"granny_speak"
-			],
-			[
-				"gra",
-				"granny_speak_caps"
 			]
 		]
 	},
@@ -689,6 +689,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"side",
+			"Cardstock",
 			"shuffle",
 			"returnmail",
 			"company",
@@ -751,11 +753,13 @@
 			"16"
 		],
 		"highlight": true,
-		"in_selection": false,
+		"in_selection": true,
 		"preserve_case": false,
 		"regex": false,
 		"replace_history":
 		[
+			"selection",
+			"Card",
 			"shuffler",
 			"fromemail",
 			"fromname",
