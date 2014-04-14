@@ -1,31 +1,31 @@
 def convert_size side
   sizes = {
-    'A' => { :size =>  0 },
-    'B' => { :size =>  1 },
-    'C' => { :size =>  2 },
-    'D' => { :size =>  3 },
-    'E' => { :size =>  4 },
-    'F' => { :size =>  5 },
-    'G' => { :size =>  6 },
-    'H' => { :size =>  7 },
-    'I' => { :size =>  8 },
-    'J' => { :size =>  9 },
-    'K' => { :size => 10 },
-    'L' => { :size => 11 },
-    'M' => { :size => 12 },
-    'N' => { :size => 13 },
-    'O' => { :size => 14 },
-    'P' => { :size => 15 },
-    'Q' => { :size => 16 },
-    'R' => { :size => 17 },
-    'S' => { :size => 18 },
-    't' => { :size =>  0.125 },
-    'u' => { :size =>  0.250 },
-    'v' => { :size =>  0.375 },
-    'w' => { :size =>  0.500 },
-    'x' => { :size =>  0.625 },
-    'y' => { :size =>  0.750 },
-    'z' => { :size =>  0.875 },
+    'a' => { :size =>  0 },
+    'b' => { :size =>  1 },
+    'c' => { :size =>  2 },
+    'd' => { :size =>  3 },
+    'e' => { :size =>  4 },
+    'f' => { :size =>  5 },
+    'g' => { :size =>  6 },
+    'h' => { :size =>  7 },
+    'i' => { :size =>  8 },
+    'j' => { :size =>  9 },
+    'k' => { :size => 10 },
+    'l' => { :size => 11 },
+    'm' => { :size => 12 },
+    'n' => { :size => 13 },
+    'o' => { :size => 14 },
+    'p' => { :size => 15 },
+    'q' => { :size => 16 },
+    'r' => { :size => 17 },
+    's' => { :size => 18 },
+    'T' => { :size =>  0.125 },
+    'U' => { :size =>  0.250 },
+    'V' => { :size =>  0.375 },
+    'W' => { :size =>  0.500 },
+    'X' => { :size =>  0.625 },
+    'Y' => { :size =>  0.750 },
+    'Z' => { :size =>  0.875 },
   }
 
   sizes.each do |size|
@@ -33,9 +33,9 @@ def convert_size side
   end
 
   if side == 'width'
-    puts 'Select a width. Enter \'Eu\' for 4.25'
+    puts 'Select a width. Enter \'eU\' for 4.25'
   else
-    puts 'Select a height. Enter \'Fw\' for 5.5'
+    puts 'Select a height. Enter \'fW\' for 5.5'
   end
 
   selection = gets.chomp
@@ -104,11 +104,44 @@ def convert_duplex
   return gets.chomp
 end
 
+def calculate_up w, h
+
+  leading_edge_margin = 0.394
+  trailing_edge_margin = 0.354
+  side_margin = 0.157 * 2
+  paper_width = 18 - leading_edge_margin - trailing_edge_margin
+  paper_height = 12 - side_margin
+  width = w
+  height = h
+  quarterbleed = 0.25
+  eightbleed = 0.125
+  up1quarter = (paper_width / (width + quarterbleed)).to_i * (paper_height / (height + quarterbleed)).to_i
+  up2quarter = (paper_width / (height + quarterbleed)).to_i * (paper_height / (width + quarterbleed)).to_i
+  up1eighth = (paper_width / (width + eightbleed)).to_i * (paper_height / (height + eightbleed)).to_i
+  up2eighth = (paper_width / (height + eightbleed)).to_i * (paper_height / (width + eightbleed)).to_i
+
+  if up1quarter >= up2quarter
+    quarter = up1quarter
+  else
+    quarter = up2quarter
+  end
+  if up1eighth >= up2eighth
+    eighth = up1eighth
+  else
+    eighth = up2eighth
+  end
+  return [quarter, eighth]
+
+end
+
 width = convert_size 'width'
 height = convert_size 'height'
 type = convert_type
 paper = convert_paper
 back = convert_duplex
+up = calculate_up width[1], height[1]
 puts ''
-puts "x#{width[0]}#{height[0]}#{type[0]}#{back}#{paper[0]}"
+code = "x#{width[0]}#{height[0]}#{type[0]}#{back}#{paper[0]}"
+puts code
 puts "#{width[1]}x#{height[1]} #{type[1]} on #{paper[1]} 4|#{back}"
+puts "#{code} is #{up[0]} up with a .25\" bleed & #{up[1]} with a .125\" bleed."
