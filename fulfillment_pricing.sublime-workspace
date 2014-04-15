@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"pap",
+				"paper_width"
+			],
+			[
+				"max",
+				"maxwidth"
+			],
+			[
 				"conv",
 				"convert_duplex"
 			],
@@ -506,19 +514,19 @@
 			[
 				"whil",
 				"while	while ... end"
-			],
-			[
-				"whi",
-				"while	while ... end"
-			],
-			[
-				"do",
-				"dob	Insert do |variable| … end"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "pricing.rb",
+			"settings":
+			{
+				"buffer_size": 4340,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -531,7 +539,10 @@
 	},
 	"console":
 	{
-		"height": 167.0
+		"height": 167.0,
+		"history":
+		[
+		]
 	},
 	"distraction_free":
 	{
@@ -753,7 +764,7 @@
 			"16"
 		],
 		"highlight": true,
-		"in_selection": true,
+		"in_selection": false,
 		"preserve_case": false,
 		"regex": false,
 		"replace_history":
@@ -800,8 +811,37 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "pricing.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4340,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3846,
+								3846
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2150.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -836,6 +876,11 @@
 		]
 	},
 	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "fulfillment_pricing.sublime-project",
 	"replace":
 	{
 		"height": 68.0
@@ -861,10 +906,24 @@
 		],
 		"width": 0.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": false,
-	"side_bar_width": 312.0,
-	"status_bar_visible": true
+	"side_bar_visible": true,
+	"side_bar_width": 327.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }

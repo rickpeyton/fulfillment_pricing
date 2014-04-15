@@ -47,15 +47,14 @@ def convert_size side
   end
 
   return [selection, side]
-
 end
 
 def convert_type
   card_types = {
     'c' => { :code => 'Flat Card' },
-    'f' => { :code => 'Folded Card' },
-    't' => { :code => 'Tri-Fold Card' },
-    'z' => { :code => 'Z-Fold Card' },
+    'f' => { :code => 'Folded Card', :multiplywidth => 2 },
+    't' => { :code => 'Tri-Fold Card', :multiplywidth => 3 },
+    'z' => { :code => 'Z-Fold Card', :multiplywidth => 3 },
     's' => { :code => 'Sticker' },
     'v' => { :code => 'Vinyl Sticker' },
     'n' => { :code => 'Notepad' },
@@ -68,25 +67,25 @@ def convert_type
 
   selection = gets.chomp
   type = card_types[selection][:code]
-  return [selection, type]
-
+  multiplywidth = card_types[selection][:multiplywidth]
+  return [selection, type, multiplywidth]
 end
 
 def convert_paper
   papers = {
-     '88' => { :code => '110 Smooth Ultra White' },
-     'I8' => { :code => '100 Eggshell Soft White' },
-     'AP' => { :code => '105 Metallic Pearl' },
-     'WW' => { :code => '110 Felt Bright White' },
-     'WC' => { :code => '110 Felt Warm White' },
-    'PCW' => { :code => '110 Recycled White' },
-    'RSW' => { :code => '118 Cotton Brilliant White' },
-     'UW' => { :code => '120 Eggshell Ultra White' },
-     '2E' => { :code => '120 Eggshell White' },
-     'ST' => { :code => 'Kiss Cut' },
-     'GC' => { :code => 'Crack & Peel' },
-     'VS' => { :code => 'Kiss Cut' },
-     'VC' => { :code => 'Crack & Peel' }
+     '88' => { :code => '110 Smooth Ultra White', :paperwidth => 18.5, :baseprice => 1.44 },
+     'I8' => { :code => '100 Eggshell Soft White', :paperwidth => 18.5, :baseprice => 1.44 },
+     'AP' => { :code => '105 Metallic Pearl', :paperwidth => 18, :baseprice => 2.44 },
+     'WW' => { :code => '110 Felt Bright White', :paperwidth => 18.5, :baseprice => 1.64 },
+     'WC' => { :code => '110 Felt Warm White', :paperwidth => 18.5, :baseprice => 1.64 },
+    'PCW' => { :code => '110 Recycled White', :paperwidth => 18.5, :baseprice => 1.64 },
+    'RSW' => { :code => '118 Cotton Brilliant White', :paperwidth => 18, :baseprice => 2.44 },
+     'UW' => { :code => '120 Eggshell Ultra White', :paperwidth => 18.5, :baseprice => 1.64 },
+     '2E' => { :code => '120 Eggshell White', :paperwidth => 18.5, :baseprice => 1.64 },
+     'ST' => { :code => 'Kiss Cut', :paperwidth => 18, :baseprice => 3.15 },
+     'GC' => { :code => 'Crack & Peel', :paperwidth => 18, :baseprice => 4.15 },
+     'VS' => { :code => 'Kiss Cut', :paperwidth => 18, :baseprice => 1.44 },
+     'VC' => { :code => 'Crack & Peel', :paperwidth => 18, :baseprice => 1.44 }
   }
 
   papers.each do |paper|
@@ -95,7 +94,8 @@ def convert_paper
 
   selection = gets.chomp
   paper = papers[selection][:code]
-  return [selection, paper]
+  width = papers[selection][:paperwidth]
+  return [selection, paper, width]
 end
 
 def convert_duplex
@@ -104,12 +104,11 @@ def convert_duplex
   return gets.chomp
 end
 
-def calculate_up w, h
-
+def calculate_up w, h, paper
   leading_edge_margin = 0.394
   trailing_edge_margin = 0.354
   side_margin = 0.157 * 2
-  paper_width = 18 - leading_edge_margin - trailing_edge_margin
+  paper_width = paper - leading_edge_margin - trailing_edge_margin
   paper_height = 12 - side_margin
   width = w
   height = h
@@ -131,17 +130,38 @@ def calculate_up w, h
     eighth = up2eighth
   end
   return [quarter, eighth]
-
 end
 
+# Call the convert size method and specify width or height
 width = convert_size 'width'
 height = convert_size 'height'
+
+# If width > height set width = to height
+if width[1] > height[1]
+  temp_width = width
+  width = height
+  height = temp_width
+end
+
 type = convert_type
+width_to_calculate = width[1]
+if type[2] != nil
+  width_to_calculate = width_to_calculate * type[2]  
+end
 paper = convert_paper
+paperwidth = paper[2]
 back = convert_duplex
-up = calculate_up width[1], height[1]
+up = calculate_up width_to_calculate, height[1], paperwidth
 puts ''
 code = "x#{width[0]}#{height[0]}#{type[0]}#{back}#{paper[0]}"
 puts code
-puts "#{width[1]}x#{height[1]} #{type[1]} on #{paper[1]} 4|#{back}"
-puts "#{code} is #{up[0]} up with a .25\" bleed & #{up[1]} with a .125\" bleed."
+if type[2] != nil
+  puts "#{width[1]}x#{height[1]} #{type[1]} (#{width_to_calculate}x#{height[1]} Flat) on #{paper[1]} 4|#{back}"
+else
+  puts "#{width[1]}x#{height[1]} #{type[1]} on #{paper[1]} 4|#{back}"
+end
+puts "#{code} is #{up[0]} up with a .25\" bleed & #{up[1]} up with a .125\" bleed."
+
+
+
+
